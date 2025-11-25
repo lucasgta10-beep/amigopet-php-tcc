@@ -1,67 +1,64 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Serviços - AmigoPet</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-        .btn-link { color:red; background:none; border:none; padding:0; cursor:pointer; text-decoration: underline; }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>🚿 Lista de Serviços Agendados</h1>
+@section('content')
 
-    <a href="/servicos/create" class="btn">Agendar Novo Serviço</a>
-    
-    <p style="margin-top:15px;"><a href="/clientes">&larr; Voltar para Clientes</a></p>
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-3xl font-bold text-gray-700">🚿 Lista de Serviços</h1>
+    <a href="/servicos/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+        Agendar Novo Serviço
+    </a>
+</div>
 
-    <hr>
+<div class="mb-4">
+    <a href="/clientes" class="text-blue-600 hover:underline flex items-center">
+        <span class="mr-1">&larr;</span> Voltar para Clientes
+    </a>
+</div>
 
-    <table>
-        <thead>
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full leading-normal">
+        <thead class="bg-gray-200 text-gray-600">
             <tr>
-                <th>Serviço</th>
-                <th>Animal</th>
-                <th>Dono (Cliente)</th>
-                <th>Data</th>
-                <th>Valor (R$)</th>
-                <th>Ações</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Serviço</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Animal</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Dono</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Data</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Valor</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Ações</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-gray-700">
             @forelse ($servicos as $servico)
-                <tr>
-                    <td>{{ $servico->tipo }}</td>
-                    <td>{{ $servico->animal?->nome }}</td> 
-                    <td>{{ $servico->animal?->cliente?->nome }}</td>
-                    <td>{{ $servico->data }}</td>
-                    <td>{{ $servico->valor }}</td>
-                    <td>
-                       <td>
-                    <a href="/servicos/{{ $servico->id }}/edit">Editar</a>
+            <tr class="hover:bg-gray-50">
+                <td class="px-5 py-4 border-b border-gray-200">{{ $servico->tipo }}</td>
+                <td class="px-5 py-4 border-b border-gray-200">{{ $servico->animal?->nome }}</td>
+                <td class="px-5 py-4 border-b border-gray-200">{{ $servico->animal?->cliente?->nome }}</td>
+                
+                <td class="px-5 py-4 border-b border-gray-200">
+                    {{ date('d/m/Y', strtotime($servico->data)) }}
+                </td>
+                
+                <td class="px-5 py-4 border-b border-gray-200">
+                    R$ {{ number_format($servico->valor, 2, ',', '.') }}
+                </td>
 
-                    <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-link">Apagar</button>
+                <td class="px-5 py-4 border-b border-gray-200">
+                    <a href="/servicos/{{ $servico->id }}/edit" class="text-blue-600 hover:underline mr-3">Editar</a>
+                    <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" class="inline">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="text-red-600 hover:underline">Apagar</button>
                     </form>
                 </td>
-                    </td>
-                </tr>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="6">Nenhum serviço agendado ainda.</td>
-                </tr>
+            <tr>
+                <td colspan="6" class="px-5 py-4 text-center text-gray-500">
+                    Nenhum serviço agendado ainda.
+                </td>
+            </tr>
             @endforelse
         </tbody>
     </table>
+</div>
 
-</body>
-</html>
+@endsection

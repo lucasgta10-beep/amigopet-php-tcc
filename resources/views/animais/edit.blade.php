@@ -1,46 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Animal - AmigoPet</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        form { max-width: 500px; margin-top: 20px; }
-        div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
-        .btn { padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
-        .btn-secondary { background-color: #6c757d; }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>🐶 Editando: {{ $animal->nome }}</h1>
+@section('content')
+
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    
+    <h1 class="text-2xl font-bold mb-6 text-gray-700 border-b pb-2">🐶 Editar Animal</h1>
 
     <form action="{{ route('animais.update', $animal->id) }}" method="POST">
         
-        @csrf @method('PUT') <div>
-            <label for="nome">Nome do Animal:</label>
-            <input type="text" id="nome" name="nome" value="{{ $animal->nome }}" required>
+        @csrf
+        @method('PUT')
+
+        <div class="mb-4">
+            <label for="nome" class="block text-gray-700 font-bold mb-2">Nome do Animal:</label>
+            <input type="text" id="nome" name="nome" value="{{ $animal->nome }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <div>
-            <label for="especie">Espécie:</label>
-            <input type="text" id="especie" name="especie" value="{{ $animal->especie }}" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4">
+                <label for="especie" class="block text-gray-700 font-bold mb-2">Espécie:</label>
+                <input type="text" id="especie" name="especie" value="{{ $animal->especie }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="raca" class="block text-gray-700 font-bold mb-2">Raça:</label>
+                <input type="text" id="raca" name="raca" value="{{ $animal->raca }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
         </div>
 
-        <div>
-            <label for="raca">Raça:</label>
-            <input type="text" id="raca" name="raca" value="{{ $animal->raca }}" required>
-        </div>
-
-        <div>
-            <label for="cliente_id">Dono (Cliente):</label>
-            <select id="cliente_id" name="cliente_id" required>
+        <div class="mb-6">
+            <label for="cliente_id" class="block text-gray-700 font-bold mb-2">Dono (Cliente):</label>
+            <select id="cliente_id" name="cliente_id" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 <option value="">-- Selecione um Dono --</option>
-                
                 @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}" {{ $cliente->id == $animal->cliente_id ? 'selected' : '' }}>
                         {{ $cliente->nome }}
@@ -49,12 +40,14 @@
             </select>
         </div>
 
-        <div>
-            <button type="submit" class="btn">Atualizar Animal</button>
-            <a href="/animais" class="btn btn-secondary">Cancelar</a>
+        <div class="flex items-center justify-end space-x-4">
+            <a href="/animais" class="text-gray-600 hover:text-gray-800 font-semibold">Cancelar</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                Atualizar Animal
+            </button>
         </div>
         
     </form>
+</div>
 
-</body>
-</html>
+@endsection

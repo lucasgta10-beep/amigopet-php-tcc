@@ -19,5 +19,7 @@ Route::get('/', function () {
 // Essa Ela cria automaticamente TODAS as 7 rotas necessárias para um CRUD completo de Clientes.
  //Ela "mapeia" automaticamente cada URL para uma função 
 Route::resource('clientes', ClienteController::class);
-Route::resource('animais', AnimalController::class);
+Route::resource('animais', AnimalController::class)->parameters([
+    'animais' => 'animal'
+]);
 Route::resource('servicos', ServicoController::class);

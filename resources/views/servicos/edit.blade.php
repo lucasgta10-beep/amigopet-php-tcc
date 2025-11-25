@@ -1,29 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Serviço - AmigoPet</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        form { max-width: 500px; margin-top: 20px; }
-        div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="date"], input[type="number"], select, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
-        .btn { padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
-        .btn-secondary { background-color: #6c757d; }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>🚿 Editando Serviço</h1>
+@section('content')
+
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    
+    <h1 class="text-2xl font-bold mb-6 text-gray-700 border-b pb-2">🚿 Editando Serviço</h1>
 
     <form action="{{ route('servicos.update', $servico->id) }}" method="POST">
+        
+        @csrf
+        @method('PUT')
 
-        @csrf @method('PUT') <div>
-            <label for="animal_id">Animal:</label>
-            <select id="animal_id" name="animal_id" required>
+        <div class="mb-4">
+            <label for="animal_id" class="block text-gray-700 font-bold mb-2">Animal:</label>
+            <select id="animal_id" name="animal_id" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 <option value="">-- Selecione um Animal --</option>
                 @foreach ($animais as $animal)
                     <option value="{{ $animal->id }}" {{ $animal->id == $servico->animal_id ? 'selected' : '' }}>
@@ -33,32 +23,36 @@
             </select>
         </div>
 
-        <div>
-            <label for="tipo">Tipo de Serviço:</label>
-            <input type="text" id="tipo" name="tipo" value="{{ $servico->tipo }}" required>
+        <div class="mb-4">
+            <label for="tipo" class="block text-gray-700 font-bold mb-2">Tipo de Serviço:</label>
+            <input type="text" id="tipo" name="tipo" value="{{ $servico->tipo }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
 
-        <div>
-            <label for="data">Data do Serviço:</label>
-            <input type="date" id="data" name="data" value="{{ $servico->data }}" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4">
+                <label for="data" class="block text-gray-700 font-bold mb-2">Data do Serviço:</label>
+                <input type="date" id="data" name="data" value="{{ $servico->data }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="valor" class="block text-gray-700 font-bold mb-2">Valor (R$):</label>
+                <input type="number" id="valor" name="valor" step="0.01" value="{{ $servico->valor }}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
         </div>
 
-        <div>
-            <label for="valor">Valor (R$):</label>
-            <input type="number" id="valor" name="valor" step="0.01" value="{{ $servico->valor }}" required>
+        <div class="mb-6">
+            <label for="descricao" class="block text-gray-700 font-bold mb-2">Descrição (Opcional):</label>
+            <textarea id="descricao" name="descricao" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ $servico->descricao }}</textarea>
         </div>
 
-        <div>
-            <label for="descricao">Descrição (Opcional):</label>
-            <textarea id="descricao" name="descricao" rows="3">{{ $servico->descricao }}</textarea>
+        <div class="flex items-center justify-end space-x-4">
+            <a href="/servicos" class="text-gray-600 hover:text-gray-800 font-semibold">Cancelar</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                Atualizar Serviço
+            </button>
         </div>
-
-        <div>
-            <button type="submit" class="btn">Atualizar Serviço</button>
-            <a href="/servicos" class="btn btn-secondary">Cancelar</a>
-        </div>
-
+        
     </form>
+</div>
 
-</body>
-</html>
+@endsection
