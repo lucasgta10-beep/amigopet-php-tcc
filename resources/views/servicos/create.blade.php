@@ -38,3 +38,20 @@
                 <input type="number" id="valor" name="valor" step="0.01" placeholder="Ex: 50.00" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
         </div>
+
+        <div class="mb-6">
+            <label for="descricao" class="block text-gray-700 font-bold mb-2">Descrição (Opcional):</label>
+            <textarea id="descricao" name="descricao" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Detalhes adicionais..."></textarea>
+        </div>
+
+        <div class="flex items-center justify-end space-x-4">
+            <a href="/servicos" class="text-gray-600 hover:text-gray-800 font-semibold">Cancelar</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                Agendar Serviço
+            </button>
+        </div>
+        
+    </form>
+</div>
+
+@endsection

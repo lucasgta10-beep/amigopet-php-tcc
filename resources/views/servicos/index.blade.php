@@ -24,6 +24,7 @@
                 <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Dono</th>
                 <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Data</th>
                 <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Valor</th>
+                <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Descrição</th>
                 <th class="px-5 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold uppercase">Ações</th>
             </tr>
         </thead>
@@ -31,15 +32,19 @@
             @forelse ($servicos as $servico)
             <tr class="hover:bg-gray-50">
                 <td class="px-5 py-4 border-b border-gray-200">{{ $servico->tipo }}</td>
-                <td class="px-5 py-4 border-b border-gray-200">{{ $servico->animal?->nome }}</td>
+                <td class="px-5 py-4 border-b border-gray-200 font-bold">{{ $servico->animal?->nome }}</td>
                 <td class="px-5 py-4 border-b border-gray-200">{{ $servico->animal?->cliente?->nome }}</td>
                 
                 <td class="px-5 py-4 border-b border-gray-200">
                     {{ date('d/m/Y', strtotime($servico->data)) }}
                 </td>
                 
-                <td class="px-5 py-4 border-b border-gray-200">
+                <td class="px-5 py-4 border-b border-gray-200 text-green-600 font-bold">
                     R$ {{ number_format($servico->valor, 2, ',', '.') }}
+                </td>
+
+                <td class="px-5 py-4 border-b border-gray-200 text-sm text-gray-500">
+                    {{ $servico->descricao ?? '-' }}
                 </td>
 
                 <td class="px-5 py-4 border-b border-gray-200">
@@ -52,7 +57,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="px-5 py-4 text-center text-gray-500">
+                <td colspan="7" class="px-5 py-4 text-center text-gray-500">
                     Nenhum serviço agendado ainda.
                 </td>
             </tr>
