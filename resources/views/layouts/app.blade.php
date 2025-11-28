@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon das patas -->
+    <link rel="icon" href="favicon.svg/favicon.svg" type="image/svg+xml+svg">
+
     <title>AmigoPet - O Cuidado que seu Pet Merece</title>
 
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-100 text-gray-800"> <nav class="bg-white shadow-md p-4">
+<body class="bg-gray-100 text-gray-800">
+<nav class="bg-white shadow-md p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/clientes" class="text-2xl font-bold text-blue-600">🐾 AmigoPet</a>
 
