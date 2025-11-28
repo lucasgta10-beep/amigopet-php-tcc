@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cliente;
+use Illuminate\Http\Request;
+
+class ClienteController extends Controller
+{
+    public function index()
+    {
+        $clientes = Cliente::all();
+        return view('clientes.index', compact('clientes'));
+    }
+
+    public function create()
+    {
+        return view('clientes.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nome' => 'required',
+            'telefone' => 'required',
+            'endereco' => 'required',
+        ]);
+
+        Cliente::create($request->all());
+
+        return redirect('/clientes')->with('sucesso', 'Cliente cadastrado com sucesso!');
+    }
+
+    public function edit(Cliente $cliente)
+    {
+        return view('clientes.edit', compact('cliente'));
+    }
+
+    public function update(Request $request, Cliente $cliente)
+    {
+        $request->validate([
+            'nome' => 'required',
+            'telefone' => 'required',
+            'endereco' => 'required',
+        ]);
+
+        $cliente->update($request->all());
+
+        return redirect('/clientes')->with('sucesso', 'Cliente atualizado com sucesso!');
+    }
+
+    public function destroy(Cliente $cliente)
+    {
+        // apagar animais antes (caso o banco ainda não tenha CASCADE)
+        $cliente->animais()->delete();
+
+        $cliente->delete();
+
+        return redirect('/clientes')->with('sucesso', 'Cliente apagado com sucesso!');
+    }
+}
