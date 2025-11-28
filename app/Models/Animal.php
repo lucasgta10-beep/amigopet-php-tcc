@@ -11,7 +11,12 @@ class Animal extends Model
 
     protected $table = 'animais';
 
-    protected $fillable = ['nome', 'especie', 'raca', 'cliente_id'];
+    protected $fillable = [
+        'nome',
+        'especie',
+        'raca',
+        'cliente_id'
+    ];
 
     public function cliente()
     {

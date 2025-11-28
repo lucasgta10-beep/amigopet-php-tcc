@@ -9,7 +9,11 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'telefone', 'endereco'];
+    protected $fillable = [
+        'nome',
+        'telefone',
+        'endereco'
+    ];
 
     public function animais()
     {
